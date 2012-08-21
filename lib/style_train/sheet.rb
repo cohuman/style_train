@@ -435,6 +435,8 @@ CSS
     def export opts={}
       name = file_name(opts[:file_name]) 
       str = render(opts[:render_method] || :content), opts
+      # sometimes still an array at this point, bad w/ruby 1.9
+      str = str.respond_to?(:join) ? str.join : str 
       File.open("#{StyleTrain.dir}/#{file_name}.css", 'w'){ |f| f.write(str) }
     end
     
